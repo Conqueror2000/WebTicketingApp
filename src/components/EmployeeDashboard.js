@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TicketForm from './TicketForm';
+import React, { useEffect, useState } from 'react';
 import '../styles/EmployeeDashboard.css'; // Ensure you have your CSS file imported here
-import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
+import PieChartComponent from './PieChartComponent';
+// If using an external library
+// import Lightbox from 'react-image-lightbox';
 
-const EmployeeDashboard = () => {
+
+import TicketForm from './TicketForm';
+
+const EmployeeDashboard = () =>
+{
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
+  const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [tickets, setTickets] = useState([
     {
       TicketNumber: 1,
@@ -92,39 +98,48 @@ const EmployeeDashboard = () => {
     (ticket) => ticket.Priority === 'Low'
   ).length;
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     axios
       .get('http://localhost:5000/api/tickets')
-      .then((response) => {
+      .then((response) =>
+      {
         setTickets((prevTickets) => [...prevTickets, ...response.data]);
       })
-      .catch((error) => {
+      .catch((error) =>
+      {
         console.error('There was an error fetching data:', error);
       });
   }, []);
 
-  const handleTicketClick = (ticket) => {
+  const handleTicketClick = (ticket) =>
+  {
     setSelectedTicket(ticket);
   };
 
-  const closeMiniScreen = () => {
+  const closeMiniScreen = () =>
+  {
     setSelectedTicket(null);
   };
 
-  const handleLogout = () => {
+  const handleLogout = () =>
+  {
     // Implement logout logic here
     // For example, clear user authentication state and redirect to the login page
   };
 
-  const handleShowTickets = () => {
+  const handleShowTickets = () =>
+  {
     setSelectedOption('Show Tickets');
   };
 
-  const handleRaiseTicket = () => {
+  const handleRaiseTicket = () =>
+  {
     setSelectedOption('Raise Ticket');
   };
 
-  function getStatusColor(status) {
+  function getStatusColor(status)
+  {
     switch (status) {
       case 'Raised':
         return 'gray';
@@ -148,27 +163,40 @@ const EmployeeDashboard = () => {
       <div className='left-section'>
         <div className='user-profile'>
           <div className='profile-image'>
-            <img src={userProfile.profileImage} alt='User Profile' />
+            <img
+              src={userProfile.profileImage}
+              alt="Profile"
+              onClick={() => setLightboxOpen(true)}
+            />
           </div>
           <div className='profile-info'>
             <h3>{userProfile.name}</h3>
-            <button className='button-edit-profile'>Edit Profile</button>
+            <button className='button-edit-profile'>Profile</button>
           </div>
         </div>
+        {
+          isLightboxOpen && (
+            <div className="lightbox">
+              <div className="lightbox-content">
+                <BarGraph />
+                <PieChartComponent />
+                <button onClick={() => setLightboxOpen(false)}>Close</button>
+              </div>
+            </div>
+          )
+        }
 
         <div className='button-group'>
           <h4>Actions</h4>
           <button
-            className={`button1 ${
-              selectedOption === 'Show Tickets' ? 'active' : ''
-            }`}
+            className={`button1 ${selectedOption === 'Show Tickets' ? 'active' : ''
+              }`}
             onClick={handleShowTickets}>
             Show Tickets
           </button>
           <button
-            className={`button1 ${
-              selectedOption === 'Raise Ticket' ? 'active' : ''
-            }`}
+            className={`button1 ${selectedOption === 'Raise Ticket' ? 'active' : ''
+              }`}
             onClick={handleRaiseTicket}>
             Raise Ticket
           </button>
@@ -179,10 +207,10 @@ const EmployeeDashboard = () => {
             {RaisedTickets + CompletedTickets + OnholdTickets + ActiveTickets}
           </h3>
           <ul>
-            <li>Yet To Assign:- {RaisedTickets}</li>
-            <li>Resolved:- {CompletedTickets}</li>
-            <li>Onhold:- {OnholdTickets}</li>
-            <li>Active:- {ActiveTickets}</li>
+            <li>Yet To Assign:- <span>{RaisedTickets}</span></li>
+            <li>Resolved:- <span>{CompletedTickets}</span></li>
+            <li>Onhold:- <span>{OnholdTickets}</span></li>
+            <li>Active:- <span>{ActiveTickets}</span></li>
           </ul>
         </div>
         <button className='button-logout' onClick={handleLogout}>
@@ -212,9 +240,8 @@ const EmployeeDashboard = () => {
                   </p>
                 </div>
                 <div
-                  className={`ticket-info-container ${
-                    !ticket.AssignedTo ? 'unassigned' : ''
-                  }`}>
+                  className={`ticket-info-container ${!ticket.AssignedTo ? 'unassigned' : ''
+                    }`}>
                   <p className='ticket-info assigned-to'>
                     Assigned To: {ticket.AssignedTo}
                   </p>
