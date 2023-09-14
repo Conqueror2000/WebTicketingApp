@@ -27,7 +27,7 @@ const TechnicianForm = () => {
       return;
     }
     try {
-      const response = await axios.post('https://localhost:5001/api/technician', formData);
+      const response = await axios.post('https://localhost:7068/api/Technicians', formData);
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);

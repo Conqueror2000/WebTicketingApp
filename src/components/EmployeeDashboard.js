@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
-import '../styles/EmployeeDashboard.css';
-
+import '../styles/EmployeeDashboard.css'; // Ensure you have your CSS file imported here
+import PieChartComponent from './PieChartComponent';
+import BarGraph from './BarGraph';
 
 const EmployeeDashboard = () => {
-  const [selectedOption, setSelectedOption] = useState('Profile');
+  const [selectedOption, setSelectedOption] = useState('Show Tickets');
   const [tickets, setTickets] = useState([
     {
       TicketNumber: 1,
       Sector: 'IT',
       TypeOfEquip: 'Laptop',
-      Status: 'Pending',
-      Date: '2021-09-01',
-      EmployeeId: 'E001',
+      Status: 'Active',
+      EmployeeId: 'E002',
       Priority: 'High',
       Comment: 'Not working',
       AssignedTo: 'T001',
@@ -23,7 +23,36 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Completed',
-      Date: '2021-09-02',
+      EmployeeId: 'E002',
+      Priority: 'Medium',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 3,
+      Sector: 'HR',
+      TypeOfEquip: 'Mouse',
+      Status: 'Onhold',
+      EmployeeId: 'E002',
+      Priority: 'Low',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 4,
+      Sector: 'HR',
+      TypeOfEquip: 'Printer',
+      Status: 'Raised',
+      EmployeeId: 'E002',
+      Priority: 'Critical',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 5,
+      Sector: 'HR',
+      TypeOfEquip: 'Printer',
+      Status: 'Raised',
       EmployeeId: 'E002',
       Priority: 'Medium',
       Comment: 'Paper jam',
@@ -31,6 +60,37 @@ const EmployeeDashboard = () => {
     },
   ]);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [userProfile] = useState({
+    name: 'Asutosh', // Randomly generated username
+    profileImage: 'path/to/profile-image.jpg', // Replace with the path to the user's profile image
+  });
+
+  // Define the ticket status values
+  const RaisedTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Raised'
+  ).length;
+  const CompletedTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Completed'
+  ).length;
+  const OnholdTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Onhold'
+  ).length;
+  const ActiveTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Active'
+  ).length;
+
+  const CriticalTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'Critical'
+  ).length;
+  const HighTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'High'
+  ).length;
+  const MediumTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'Medium'
+  ).length;
+  const LowTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'Low'
+  ).length;
 
   useEffect(() => {
     axios
@@ -56,40 +116,127 @@ const EmployeeDashboard = () => {
     // For example, clear user authentication state and redirect to the login page
   };
 
+  const handleShowTickets = () => {
+    setSelectedOption('Show Tickets');
+  };
+
+  const handleRaiseTicket = () => {
+    setSelectedOption('Raise Ticket');
+  };
+
+  function getStatusColor(status) {
+    switch (status) {
+      case 'Raised':
+        return 'gray';
+      case 'Active':
+        return '#b400d8';
+      case 'Onhold':
+        return 'red';
+      case 'Completed':
+        return 'green';
+      default:
+        return 'black'; // Default color if status is not recognized
+    }
+  }
+
+  const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
+  const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
+  const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
+
   return (
     <div className='employee-dashboard'>
       <div className='left-section'>
-        <button
-          className='button1'
-          onClick={() => setSelectedOption('Profile')}>
-          Profile
-        </button>
-        <button
-          className='button1'
-          onClick={() => setSelectedOption('Raise Ticket')}>
-          Raise Ticket
-        </button>
-        <button
-          className='button1'
-          onClick={() => setSelectedOption('Show Tickets')}>
-          Show Tickets
-        </button>
-        <button className='button1' onClick={handleLogout}>
+        <div className='user-profile'>
+          <div className='profile-image'>
+            <img src={userProfile.profileImage} alt='User Profile' />
+          </div>
+          <div className='profile-info'>
+            <h3>{userProfile.name}</h3>
+            <button className='button-edit-profile'>Edit Profile</button>
+          </div>
+        </div>
+
+        <div className='button-group'>
+          <h4>Actions</h4>
+          <button
+            className={`button1 ${
+              selectedOption === 'Show Tickets' ? 'active' : ''
+            }`}
+            onClick={handleShowTickets}>
+            Show Tickets
+          </button>
+          <button
+            className={`button1 ${
+              selectedOption === 'Raise Ticket' ? 'active' : ''
+            }`}
+            onClick={handleRaiseTicket}>
+            Raise Ticket
+          </button>
+        </div>
+        <div className='ticket-status-box'>
+          <h3>
+            Total Tickets:-{' '}
+            {RaisedTickets + CompletedTickets + OnholdTickets + ActiveTickets}
+          </h3>
+          <ul>
+            <li>Yet To Assign:- {RaisedTickets}</li>
+            <li>Resolved:- {CompletedTickets}</li>
+            <li>Onhold:- {OnholdTickets}</li>
+            <li>Active:- {ActiveTickets}</li>
+          </ul>
+        </div>
+        <button className='button-logout' onClick={handleLogout}>
           Logout
         </button>
       </div>
       <div className='right-section'>
         <h1>Welcome To The Employee Dashboard</h1>
-        {selectedOption === 'Profile' && <div>Your Profile Here</div>}
         {selectedOption === 'Raise Ticket' && <TicketForm />}
-        {selectedOption === 'Show Tickets' &&
-          tickets.map((ticket) => (
-            <div
-              key={ticket.TicketNumber}
-              onClick={() => handleTicketClick(ticket)}>
-              {ticket.Comment}
+        {selectedOption === 'Show Tickets' && (
+          <div>
+            {tickets.map((ticket) => (
+              <div
+                key={ticket.TicketNumber}
+                onClick={() => handleTicketClick(ticket)}
+                className='ticket-item'>
+                <h4 className='ticket-number'>Ticket #{ticket.TicketNumber}</h4>
+                <hr className='line-separator' />
+                <div className='ticket-info-container'>
+                  <p className='ticket-info comment'>
+                    Comment: {ticket.Comment}
+                  </p>
+                  <p
+                    className='ticket-info status'
+                    style={{ color: getStatusColor(ticket.Status) }}>
+                    Status: {ticket.Status}
+                  </p>
+                </div>
+                <div
+                  className={`ticket-info-container ${
+                    !ticket.AssignedTo ? 'unassigned' : ''
+                  }`}>
+                  <p className='ticket-info assigned-to'>
+                    Assigned To: {ticket.AssignedTo}
+                  </p>
+                  <p className='ticket-info priority'>
+                    Priority: {ticket.Priority}
+                  </p>
+                </div>
+              </div>
+            ))}
+            <div>
+              <div style={{ height: '150px' }}>
+                <PieChartComponent data={data} />
+              </div>
             </div>
-          ))}
+            <div>
+              <h4>Bar Graph Example</h4>
+              <div style={{ maxHeight: '150px', width: '40%' }}>
+                <BarGraph labels={fieldNames} values={fieldValues} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {selectedTicket && (

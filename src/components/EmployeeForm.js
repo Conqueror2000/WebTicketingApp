@@ -27,7 +27,7 @@ const EmployeeForm = () => {
       return;
     }
     try {
-      const response = await axios.post('https://localhost:5001/api/employee', formData);
+      const response = await axios.post('https://localhost:7068/api/Users`', formData);
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);

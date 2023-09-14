@@ -130,7 +130,7 @@ const TicketForm = () => {
             onChange={handleChange}
             required></textarea>
         </div>
-        <button type='submit' className='btn btn-primary'>
+        <button type='submit' className='btn btn-primary' style={{marginLeft:'49%'}}>
           Submit
         </button>
       </form>

@@ -25,6 +25,9 @@ const LoginForm = () => {
       try {
         const response = await axios.get(
           `https://your-api-url.com/${formData.userType.toLowerCase()}`
+
+          // https://localhost:7068/api/Users ->all employee list
+          //https://localhost:7068/api/Technician -> all technician list
         );
         setUserList(response.data);
       } catch (error) {
