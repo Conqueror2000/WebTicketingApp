@@ -6,6 +6,10 @@
 }
 
 .left-section {
+  position: sticky;
+  top: 0;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable scrolling if content overflows */
   flex: 1;
   background-color: #142732;
   color: white;
@@ -137,6 +141,8 @@
 }
 
 .right-section {
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100vh;
   flex: 4;
   background-color: #f5f5f5;
   padding: 20px;
@@ -242,4 +248,22 @@
 
 .assigned-to {
   color: gray /* Green color for Assigned To */
+}
+
+.sort-filter-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sort-filter-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-right: 8px;
+  width: 5.5%;
+  text-align: right;
 }

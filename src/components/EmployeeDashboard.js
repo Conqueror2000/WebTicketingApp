@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
-import '../styles/EmployeeDashboard.css'; // Ensure you have your CSS file imported here
-// import sortTickets from './Sorting';
+import '../styles/EmployeeDashboard.css'; 
 import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
+import { NameOfUser } from './LoginForm';
 
 const EmployeeDashboard = () => {
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
@@ -91,27 +91,41 @@ const EmployeeDashboard = () => {
     },
   ]);
   const [selectedTicket, setSelectedTicket] = useState(null);
-  const [userProfile] = useState({
-    name: 'Asutosh', // Randomly generated username
-    profileImage: 'path/to/profile-image.jpg', // Replace with the path to the user's profile image
-  });
+
+  // New state variables for sorting
+  const [sortCriteria, setSortCriteria] = useState('TicketNumber');
+  const [sortOrder, setSortOrder] = useState('asc');
+
+  //New state varible for filtering
+  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterPriority, setFilterPriority] = useState('All');
 
   // Define the ticket status values
-  const RaisedTickets = tickets.filter((ticket) => ticket.Status === 'Raised');
+  const RaisedTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Raised'
+  ).length;
   const CompletedTickets = tickets.filter(
     (ticket) => ticket.Status === 'Completed'
-  );
-  const OnholdTickets = tickets.filter((ticket) => ticket.Status === 'Onhold');
-  const ActiveTickets = tickets.filter((ticket) => ticket.Status === 'Active');
+  ).length;
+  const OnholdTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Onhold'
+  ).length;
+  const ActiveTickets = tickets.filter(
+    (ticket) => ticket.Status === 'Active'
+  ).length;
 
   const CriticalTickets = tickets.filter(
     (ticket) => ticket.Priority === 'Critical'
-  );
-  const HighTickets = tickets.filter((ticket) => ticket.Priority === 'High');
+  ).length;
+  const HighTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'High'
+  ).length;
   const MediumTickets = tickets.filter(
     (ticket) => ticket.Priority === 'Medium'
-  );
-  const LowTickets = tickets.filter((ticket) => ticket.Priority === 'Low');
+  ).length;
+  const LowTickets = tickets.filter(
+    (ticket) => ticket.Priority === 'Low'
+  ).length;
 
   useEffect(() => {
     axios
@@ -160,33 +174,45 @@ const EmployeeDashboard = () => {
     }
   }
 
-  const data = [
-    RaisedTickets.length,
-    CompletedTickets.length,
-    OnholdTickets.length,
-    ActiveTickets.length,
-  ];
+  // New sorting function
+  const sortedTickets = useMemo(() => {
+    let filteredTickets = tickets;
+
+    if (filterStatus !== 'All') {
+      filteredTickets = tickets.filter(
+        (ticket) => ticket.Status === filterStatus
+      );
+    }
+
+    if (filterPriority !== 'All') {
+      filteredTickets = filteredTickets.filter(
+        (ticket) => ticket.Priority === filterPriority
+      );
+    }
+
+    return filteredTickets.sort((a, b) => {
+      if (sortCriteria === 'Priority') {
+        const priorityOrder = ['Low', 'Medium', 'High', 'Critical'];
+        return sortOrder === 'asc'
+          ? priorityOrder.indexOf(a.Priority) -
+              priorityOrder.indexOf(b.Priority)
+          : priorityOrder.indexOf(b.Priority) -
+              priorityOrder.indexOf(a.Priority);
+      } else {
+        return sortOrder === 'asc'
+          ? a.TicketNumber - b.TicketNumber
+          : b.TicketNumber - a.TicketNumber;
+      }
+    });
+  }, [tickets, sortCriteria, sortOrder, filterStatus,filterPriority]);
+
+  const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
   const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
-  const fieldValues = [
-    CriticalTickets.length,
-    HighTickets.length,
-    MediumTickets.length,
-    LowTickets.length,
-  ];
+  const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
 
   return (
     <div className='employee-dashboard'>
       <div className='left-section'>
-        <div className='user-profile'>
-          <div className='profile-image'>
-            <img src={userProfile.profileImage} alt='User Profile' />
-          </div>
-          <div className='profile-info'>
-            <h3>{userProfile.name}</h3>
-            <button className='button-edit-profile'>Edit Profile</button>
-          </div>
-        </div>
-
         <div className='button-group'>
           <h4>Actions</h4>
           <button
@@ -204,20 +230,26 @@ const EmployeeDashboard = () => {
             Raise Ticket
           </button>
         </div>
-        <div className='ticket-status-box'>
+        {/* <div className='ticket-status-box'>
           <h3>
             Total Tickets:-{' '}
-            {RaisedTickets.length +
-              CompletedTickets.length +
-              OnholdTickets.length +
-              ActiveTickets.length}
+            {RaisedTickets + CompletedTickets + OnholdTickets + ActiveTickets}
           </h3>
           <ul>
-            <li>Yet To Assign:- {RaisedTickets.length}</li>
-            <li>Resolved:- {CompletedTickets.length}</li>
-            <li>Onhold:- {OnholdTickets.length}</li>
-            <li>Active:- {ActiveTickets.length}</li>
+            <li>Yet To Assign:- {RaisedTickets}</li>
+            <li>Resolved:- {CompletedTickets}</li>
+            <li>Onhold:- {OnholdTickets}</li>
+            <li>Active:- {ActiveTickets}</li>
           </ul>
+        </div> */}
+        <div>
+          <div style={{ height: '150px' }}>
+            <PieChartComponent data={data} />
+          </div>
+          <h4>Bar Graph Example</h4>
+          <div style={{ maxHeight: '150px' }}>
+            <BarGraph labels={fieldNames} values={fieldValues} />
+          </div>
         </div>
         <button className='button-logout' onClick={handleLogout}>
           Logout
@@ -233,12 +265,59 @@ const EmployeeDashboard = () => {
             width: '103.5%',
             paddingLeft: '20px',
           }}>
-          Employee Dashboard
+          {NameOfUser} Dashboard
         </h1>
+
+        {/* Sorting & filtering controls, only visible when 'Show Tickets' is selected */}
+        {selectedOption === 'Show Tickets' && (
+          <div className='sorting-controls'>
+            <h4>Sort and Filter Tickets</h4>
+            <div className='sort-filter-section'>
+              <div className='sort-filter-item'>
+                <label className='label1'>SortBy: </label>
+                <select onChange={(e) => setSortCriteria(e.target.value)}>
+                  <option value='TicketNumber'> Ticket Number</option>
+                  <option value='Priority'>Sort by Priority</option>
+                </select>
+              </div>
+              <div className='sort-filter-item'>
+                <label className='label1'>Order: </label>
+                <select onChange={(e) => setSortOrder(e.target.value)}>
+                  <option value='asc'>Ascending</option>
+                  <option value='desc'>Descending</option>
+                </select>
+              </div>
+              <div className='sort-filter-item'>
+                <label className='label1'>Status: </label>
+                <select onChange={(e) => setFilterStatus(e.target.value)}>
+                  <option value='All'>All</option>
+                  <option value='Active'>Active</option>
+                  <option value='Onhold'>OnHold</option>
+                  <option value='Completed'>Completed</option>
+                  <option value='Raised'>Raised</option>
+                </select>
+              </div>
+              <div className='sort-filter-item'>
+                <label className='label1'>Priority: </label>
+                <select onChange={(e) => setFilterPriority(e.target.value)}>
+                  <option value='All'>All</option>
+                  <option value='Low'>Low</option>
+                  <option value='Medium'>Medium</option>
+                  <option value='High'>High</option>
+                  <option value='Critical'>Critical</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Existing functionality for raising a ticket */}
         {selectedOption === 'Raise Ticket' && <TicketForm />}
+
+        {/* Existing functionality for showing tickets */}
         {selectedOption === 'Show Tickets' && (
           <div>
-            {tickets.map((ticket) => (
+            {sortedTickets.map((ticket) => (
               <div
                 style={{
                   backgroundColor: '#F5F5F5',
@@ -273,17 +352,6 @@ const EmployeeDashboard = () => {
                 </div>
               </div>
             ))}
-            <div>
-              <div style={{ height: '150px' }}>
-                <PieChartComponent data={data} />
-              </div>
-            </div>
-            <div>
-              <h4>Bar Graph Example</h4>
-              <div style={{ maxHeight: '150px', width: '40%' }}>
-                <BarGraph labels={fieldNames} values={fieldValues} />
-              </div>
-            </div>
           </div>
         )}
       </div>

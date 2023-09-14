@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'; // Use useNavigate
 import '../styles/LoginForm.css';
 import '../styles/CommonFormStyles.css';
 
+export let NameOfUser = "User's";
+
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -76,8 +78,10 @@ const LoginForm = () => {
 
       if (user) {
         if (formData.userType === 'Employee') {
+          NameOfUser = user.name + "'s";
           navigate('/employee'); // Use navigate instead of history.push
         } else if (formData.userType === 'Technician') {
+          NameOfUser = user.name + "'s";
           navigate('/technician'); // Use navigate instead of history.push
         }
       } else {
@@ -134,11 +138,14 @@ const LoginForm = () => {
           Technician
         </label>
       </div>
-      <button type='submit' className='login-button btn btn-primary' style={{marginTop:"10px"}}>
+      <button
+        type='submit'
+        className='login-button btn btn-primary'
+        style={{ marginTop: '10px' }}>
         Login
       </button>
 
-      <div style={{marginTop:"10px"}}>
+      <div style={{ marginTop: '10px' }}>
         <span className='register-text' onClick={() => navigate('/register')}>
           Register?
         </span>{' '}
