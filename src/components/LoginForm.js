@@ -1,45 +1,146 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Use useNavigate
+
 import '../styles/LoginForm.css';
 import '../styles/CommonFormStyles.css';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
+    password: '',
+    userType: 'Employee',
   });
+
+  const [userList, setUserList] = useState([]);
+  const [formErrors, setFormErrors] = useState({
+    username: '',
+    password: '',
+  });
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
+  useEffect(() => {
+    // Fetch the list of users (employees or technicians) based on the selected userType
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          `https://your-api-url.com/${formData.userType.toLowerCase()}`
+        );
+        setUserList(response.data);
+      } catch (error) {
+        console.error('Fetch Users Error:', error);
+      }
+    };
+
+    fetchUsers();
+  }, [formData.userType]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.username || !formData.password) {
-      alert("Username and password are required");
-      return;
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!formData.username) {
+      errors.username = 'Username is required';
+      isValid = false;
     }
-    try {
-      const response = await axios.post('https://localhost:5001/api/login', formData);
-      console.log('Login Success:', response);
-    } catch (error) {
-      console.error('Login Error:', error);
-      alert(`Login failed: ${error.message}`);
+
+    if (!formData.password) {
+      errors.password = 'Password is required';
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if the user has entered all required fields
+    const isValid = validateForm();
+
+    if (isValid) {
+      // Check if the provided username and password match any user in the user list
+      const user = userList.find(
+        (u) =>
+          u.username === formData.username && u.password === formData.password
+      );
+
+      if (user) {
+        if (formData.userType === 'Employee') {
+          navigate('/employee'); // Use navigate instead of history.push
+        } else if (formData.userType === 'Technician') {
+          navigate('/technician'); // Use navigate instead of history.push
+        }
+      } else {
+        alert('Login failed: Invalid username or password');
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form form-group">
-      <label className="login-label form-label">
-        Username:
-        <input type="text" name="username" onChange={handleChange} className="login-input form-control" />
-      </label>
-      <label className="login-label form-label">
-        Password:
-        <input type="password" name="password" onChange={handleChange} className="login-input form-control" />
-      </label>
-      <button type="submit" className="login-button btn btn-primary">Login</button>
+    <form onSubmit={handleSubmit} className='login-form form-group'>
+      <div className='form-group'>
+        <label htmlFor='username'>Username</label>
+        <input
+          type='text'
+          id='username'
+          name='username'
+          value={formData.username}
+          onChange={handleChange}
+          className='form-control'
+        />
+        <div className='text-danger'>{formErrors.username}</div>
+      </div>
+      <div className='form-group'>
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+          value={formData.password}
+          onChange={handleChange}
+          className='form-control'
+        />
+        <div className='text-danger'>{formErrors.password}</div>
+      </div>
+      <div className='user-type'>
+        <label className='radio-label'>
+          <input
+            type='radio'
+            name='userType'
+            value='Employee'
+            checked={formData.userType === 'Employee'}
+            onChange={handleChange}
+          />
+          Employee
+        </label>
+        <label className='radio-label'>
+          <input
+            type='radio'
+            name='userType'
+            value='Technician'
+            checked={formData.userType === 'Technician'}
+            onChange={handleChange}
+          />
+          Technician
+        </label>
+      </div>
+      <button type='submit' className='login-button btn btn-primary' style={{marginTop:"10px"}}>
+        Login
+      </button>
+
+      <div style={{marginTop:"10px"}}>
+        <span className='register-text' onClick={() => navigate('/register')}>
+          Register?
+        </span>{' '}
+        A New User
+      </div>
     </form>
   );
 };
