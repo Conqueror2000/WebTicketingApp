@@ -3,11 +3,16 @@ import React, { useEffect, useState } from 'react';
 import '../styles/EmployeeDashboard.css'; // Ensure you have your CSS file imported here
 import BarGraph from './BarGraph';
 import PieChartComponent from './PieChartComponent';
+// If using an external library
+// import Lightbox from 'react-image-lightbox';
+
+
 import TicketForm from './TicketForm';
 
 const EmployeeDashboard = () =>
 {
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
+  const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [tickets, setTickets] = useState([
     {
       TicketNumber: 1,
@@ -158,13 +163,28 @@ const EmployeeDashboard = () =>
       <div className='left-section'>
         <div className='user-profile'>
           <div className='profile-image'>
-            <img src={userProfile.profileImage} alt='User Profile' />
+            <img
+              src={userProfile.profileImage}
+              alt="Profile"
+              onClick={() => setLightboxOpen(true)}
+            />
           </div>
           <div className='profile-info'>
             <h3>{userProfile.name}</h3>
             <button className='button-edit-profile'>Profile</button>
           </div>
         </div>
+        {
+          isLightboxOpen && (
+            <div className="lightbox">
+              <div className="lightbox-content">
+                <BarGraph />
+                <PieChartComponent />
+                <button onClick={() => setLightboxOpen(false)}>Close</button>
+              </div>
+            </div>
+          )
+        }
 
         <div className='button-group'>
           <h4>Actions</h4>
