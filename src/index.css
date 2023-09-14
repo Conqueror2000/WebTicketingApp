@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 body {
+=======
+body.default-theme {
+>>>>>>> 7dda517 (Dashboard)
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background-image: url('./image.jpg');

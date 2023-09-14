@@ -1,0 +1,60 @@
+.technician-dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.left-section {
+  flex: 1;
+  background-color: #142732;
+  padding: 20px;
+}
+
+.right-section {
+  flex: 4;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.right-section h1 {
+  margin-bottom: 20px;
+  color: #142732;
+}
+.right-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: blue;
+}
+
+.ticket-summary {
+  margin-top: 20px;
+}
+
+.pending-tickets,
+.active-tickets {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.ticket-details-mini-screen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  color: white;
+  background-color: #142732;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 999;
+}
+
+.button2 {
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}

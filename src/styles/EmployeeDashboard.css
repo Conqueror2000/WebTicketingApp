@@ -1,0 +1,96 @@
+.employee-dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+  
+  .left-section {
+    flex: 1;
+    background-color: #142732;
+    color: white;
+    padding: 20px;
+  }
+  
+  .left-section .button1 {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #142732;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .right-section {
+    flex: 4;
+    background-color: #f5f5f5; /* Change background color to smoky white */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Change to column layout to stack elements */
+  }
+  
+  .right-section h1 {
+    margin-bottom: 20px;
+    color: #142732;
+  }
+  
+  .right-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: blue;
+  }
+  
+  .ticket-details-mini-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    color: white;
+    background-color: #142732;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 999;
+  }
+  
+  .button1 {
+    margin-bottom: 10px;
+    background-color: #142732; /* Matching the parent's background */
+    color: white; /* Setting text color to blue */
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .button2 {
+    margin-bottom: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Ticket Form */
+  .ticket-form {
+    width: 100%;
+    max-width: 600px; /* Adjust the form width as needed */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+  }
+  
+  /* Responsive styles for the ticket form */
+  @media screen and (max-width: 600px) {
+    .ticket-form {
+      padding: 10px;
+    }
+  }
+  
