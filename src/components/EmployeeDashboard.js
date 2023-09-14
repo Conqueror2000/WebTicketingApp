@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
 import '../styles/EmployeeDashboard.css'; // Ensure you have your CSS file imported here
+// import sortTickets from './Sorting';
 import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
 
@@ -58,6 +59,36 @@ const EmployeeDashboard = () => {
       Comment: 'Paper jam',
       AssignedTo: 'T002',
     },
+    {
+      TicketNumber: 6,
+      Sector: 'HR',
+      TypeOfEquip: 'Printer',
+      Status: 'Raised',
+      EmployeeId: 'E002',
+      Priority: 'Medium',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 7,
+      Sector: 'HR',
+      TypeOfEquip: 'Printer',
+      Status: 'Raised',
+      EmployeeId: 'E002',
+      Priority: 'Medium',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 8,
+      Sector: 'HR',
+      TypeOfEquip: 'Printer',
+      Status: 'Raised',
+      EmployeeId: 'E002',
+      Priority: 'Medium',
+      Comment: 'Paper jam',
+      AssignedTo: 'T002',
+    },
   ]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [userProfile] = useState({
@@ -66,31 +97,21 @@ const EmployeeDashboard = () => {
   });
 
   // Define the ticket status values
-  const RaisedTickets = tickets.filter(
-    (ticket) => ticket.Status === 'Raised'
-  ).length;
+  const RaisedTickets = tickets.filter((ticket) => ticket.Status === 'Raised');
   const CompletedTickets = tickets.filter(
     (ticket) => ticket.Status === 'Completed'
-  ).length;
-  const OnholdTickets = tickets.filter(
-    (ticket) => ticket.Status === 'Onhold'
-  ).length;
-  const ActiveTickets = tickets.filter(
-    (ticket) => ticket.Status === 'Active'
-  ).length;
+  );
+  const OnholdTickets = tickets.filter((ticket) => ticket.Status === 'Onhold');
+  const ActiveTickets = tickets.filter((ticket) => ticket.Status === 'Active');
 
   const CriticalTickets = tickets.filter(
     (ticket) => ticket.Priority === 'Critical'
-  ).length;
-  const HighTickets = tickets.filter(
-    (ticket) => ticket.Priority === 'High'
-  ).length;
+  );
+  const HighTickets = tickets.filter((ticket) => ticket.Priority === 'High');
   const MediumTickets = tickets.filter(
     (ticket) => ticket.Priority === 'Medium'
-  ).length;
-  const LowTickets = tickets.filter(
-    (ticket) => ticket.Priority === 'Low'
-  ).length;
+  );
+  const LowTickets = tickets.filter((ticket) => ticket.Priority === 'Low');
 
   useEffect(() => {
     axios
@@ -139,9 +160,19 @@ const EmployeeDashboard = () => {
     }
   }
 
-  const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
+  const data = [
+    RaisedTickets.length,
+    CompletedTickets.length,
+    OnholdTickets.length,
+    ActiveTickets.length,
+  ];
   const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
-  const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
+  const fieldValues = [
+    CriticalTickets.length,
+    HighTickets.length,
+    MediumTickets.length,
+    LowTickets.length,
+  ];
 
   return (
     <div className='employee-dashboard'>
@@ -176,26 +207,44 @@ const EmployeeDashboard = () => {
         <div className='ticket-status-box'>
           <h3>
             Total Tickets:-{' '}
-            {RaisedTickets + CompletedTickets + OnholdTickets + ActiveTickets}
+            {RaisedTickets.length +
+              CompletedTickets.length +
+              OnholdTickets.length +
+              ActiveTickets.length}
           </h3>
           <ul>
-            <li>Yet To Assign:- {RaisedTickets}</li>
-            <li>Resolved:- {CompletedTickets}</li>
-            <li>Onhold:- {OnholdTickets}</li>
-            <li>Active:- {ActiveTickets}</li>
+            <li>Yet To Assign:- {RaisedTickets.length}</li>
+            <li>Resolved:- {CompletedTickets.length}</li>
+            <li>Onhold:- {OnholdTickets.length}</li>
+            <li>Active:- {ActiveTickets.length}</li>
           </ul>
         </div>
         <button className='button-logout' onClick={handleLogout}>
           Logout
         </button>
       </div>
-      <div className='right-section'>
-        <h1>Welcome To The Employee Dashboard</h1>
+      <div className='right-section' style={{ backgroundColor: '#E8EBEE' }}>
+        <h1
+          style={{
+            backgroundColor: '#F5F5F5',
+            padding: '15px',
+            marginTop: '-20px',
+            marginLeft: '-20px',
+            width: '103.5%',
+            paddingLeft: '20px',
+          }}>
+          Employee Dashboard
+        </h1>
         {selectedOption === 'Raise Ticket' && <TicketForm />}
         {selectedOption === 'Show Tickets' && (
           <div>
             {tickets.map((ticket) => (
               <div
+                style={{
+                  backgroundColor: '#F5F5F5',
+                  marginLeft: '30px',
+                  width: '95%',
+                }}
                 key={ticket.TicketNumber}
                 onClick={() => handleTicketClick(ticket)}
                 className='ticket-item'>
