@@ -93,7 +93,7 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit} className='login-form form-group'>
       <div className='form-group'>
-        <label htmlFor='username'>Username</label>
+        <label htmlFor='username'>UserId</label>
         <input
           type='text'
           id='username'
@@ -146,10 +146,10 @@ const LoginForm = () => {
       </button>
 
       <div style={{ marginTop: '10px' }}>
+      Only Admin Can
         <span className='register-text' onClick={() => navigate('/register')}>
-          Register?
+          Register!
         </span>{' '}
-        A New User
       </div>
     </form>
   );

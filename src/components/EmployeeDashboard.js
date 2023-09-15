@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
-import '../styles/EmployeeDashboard.css'; 
+import '../styles/EmployeeDashboard.css';
 import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
 import { NameOfUser } from './LoginForm';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeDashboard = () => {
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
@@ -92,6 +93,9 @@ const EmployeeDashboard = () => {
   ]);
   const [selectedTicket, setSelectedTicket] = useState(null);
 
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const navigate = useNavigate();
+
   // New state variables for sorting
   const [sortCriteria, setSortCriteria] = useState('TicketNumber');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -144,11 +148,6 @@ const EmployeeDashboard = () => {
 
   const closeMiniScreen = () => {
     setSelectedTicket(null);
-  };
-
-  const handleLogout = () => {
-    // Implement logout logic here
-    // For example, clear user authentication state and redirect to the login page
   };
 
   const handleShowTickets = () => {
@@ -204,11 +203,90 @@ const EmployeeDashboard = () => {
           : b.TicketNumber - a.TicketNumber;
       }
     });
-  }, [tickets, sortCriteria, sortOrder, filterStatus,filterPriority]);
+  }, [tickets, sortCriteria, sortOrder, filterStatus, filterPriority]);
 
   const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
   const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
   const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
+
+  const handleShowLogoutPopup = () => {
+    setShowLogoutPopup(true);
+  };
+
+  // Function to cancel logout
+  const handleCancelLogout = () => {
+    setShowLogoutPopup(false);
+  };
+
+  const handleLogout = () => {
+    // Show the logout confirmation popup
+    setShowLogoutPopup(true);
+  };
+  // Function to confirm and perform logout
+  const handleConfirmLogout = () => {
+    // Implement logout logic here
+    // For example, clear user authentication state and redirect to the login page
+
+    // Redirect to the '/' route after successful logout
+    navigate('/');
+  };
+
+  // Render the logout confirmation popup if showLogoutPopup is true
+  const renderLogoutPopup = () => {
+    return (
+      <div
+        className='logout-popup'
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#fff',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+          borderRadius: '5px',
+          textAlign: 'center',
+        }}>
+        <p
+          style={{
+            fontSize: '18px',
+            marginBottom: '10px',
+          }}>
+          Are you sure you want to log out?
+        </p>
+
+        <button
+          className='logout-button'
+          onClick={handleConfirmLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#3498db',
+            color: '#fff',
+            border: 'none',
+            marginRight: '10px',
+          }}>
+          Yes
+        </button>
+
+        <button
+          className='cancel-button'
+          onClick={handleCancelLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#e74c3c',
+            color: '#fff',
+            border: 'none',
+          }}>
+          Cancel
+        </button>
+      </div>
+    );
+  };
+
 
   return (
     <div className='employee-dashboard'>
@@ -372,6 +450,7 @@ const EmployeeDashboard = () => {
           <p>Assigned To: {selectedTicket.AssignedTo}</p>
         </div>
       )}
+      {showLogoutPopup && renderLogoutPopup()}
     </div>
   );
 };

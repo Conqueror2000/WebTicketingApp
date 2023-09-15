@@ -16,6 +16,21 @@ function App() {
   const [isEmployee, setIsEmployee] = useState(true);
   const location = useLocation();
 
+  const [tick, setTickets] = useState([]);
+  const updateTicketStatus = (updatedTicket) => {
+    // Find the index of the updated ticket in the current tickets array
+    const updatedIndex = tick.findIndex(
+      (tick) => tick.TicketNumber === updatedTicket.TicketNumber
+    );
+
+    // Create a new array with the updated ticket
+    const updatedTickets = [...tick];
+    updatedTickets[updatedIndex] = updatedTicket;
+
+    // Update the state with the new array of tickets
+    setTickets(updatedTickets);
+  };
+
   useEffect(() => {
     if (
       location.pathname === '/employee' ||
@@ -38,7 +53,9 @@ function App() {
       {window.location.pathname === '/' ||
       window.location.pathname === '/register' ? (
         <h1 className='text-center my-5'>
-          {window.location.pathname === '/' ? 'Web Ticketing App' : 'Register'}
+          {window.location.pathname === '/'
+            ? 'Equipment Management'
+            : 'Register'}
         </h1>
       ) : (
         void 0
@@ -49,7 +66,7 @@ function App() {
           element={isEmployee ? <EmployeeForm /> : <TechnicianForm />}
         />
         <Route path='/employee' element={<EmployeeDashboard />} />
-        <Route path='/technician' element={<TechnicianDashboard />} />
+        <Route path='/technician' element={<TechnicianDashboard tick={tick}/>} updateTicketStatus={updateTicketStatus} />
         <Route path='/' element={<LoginForm />} />
       </Routes>
       {window.location.pathname === '/register' ? (
@@ -76,4 +93,3 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
-
