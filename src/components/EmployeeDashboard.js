@@ -132,6 +132,7 @@ const EmployeeDashboard = () => {
   ).length;
 
   useEffect(() => {
+    // call axios;
     axios
       .get('http://localhost:5000/api/tickets')
       .then((response) => {
