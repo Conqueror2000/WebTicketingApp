@@ -16,6 +16,23 @@ function App() {
   const [isEmployee, setIsEmployee] = useState(true);
   const location = useLocation();
 
+<<<<<<< HEAD
+=======
+  const [tick, setTickets] = useState([]);
+  const updateTicketStatus = (updatedTicket) => {
+    // Find the index of the updated ticket in the current tickets array
+    const updatedIndex = tick.findIndex(
+      (tick) => tick.TicketNumber === updatedTicket.TicketNumber
+    );
+
+    // Create a new array with the updated ticket
+    const updatedTickets = [...tick];
+    updatedTickets[updatedIndex] = updatedTicket;
+
+    // Update the state with the new array of tickets
+    setTickets(updatedTickets);
+  };
+>>>>>>> 8828d63 (Conquer commit)
   useEffect(() => {
     if (
       location.pathname === '/employee' ||
@@ -38,6 +55,10 @@ function App() {
       {window.location.pathname === '/' ||
       window.location.pathname === '/register' ? (
         <h1 className='text-center my-5'>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8828d63 (Conquer commit)
           {window.location.pathname === '/' ? 'Web Ticketing App' : 'Register'}
         </h1>
       ) : (
@@ -49,7 +70,11 @@ function App() {
           element={isEmployee ? <EmployeeForm /> : <TechnicianForm />}
         />
         <Route path='/employee' element={<EmployeeDashboard />} />
+<<<<<<< HEAD
         <Route path='/technician' element={<TechnicianDashboard />} />
+=======
+        <Route path='/technician' element={<TechnicianDashboard tick={tick}/>} updateTicketStatus={updateTicketStatus} />
+>>>>>>> 8828d63 (Conquer commit)
         <Route path='/' element={<LoginForm />} />
       </Routes>
       {window.location.pathname === '/register' ? (
@@ -76,4 +101,7 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8828d63 (Conquer commit)

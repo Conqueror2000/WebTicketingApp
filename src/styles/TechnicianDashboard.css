@@ -177,6 +177,13 @@
 
 .button2 {
   margin-bottom: 10px;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  margin-right: 10px; /* Add margin to the right side of the "Close" button */
+=======
+>>>>>>> 00707230e089d7c6069782d1b40e9ae37a8869a2
+>>>>>>> 8828d63 (Conquer commit)
   background-color: #007bff;
   color: white;
   border: none;
@@ -184,6 +191,22 @@
   border-radius: 5px;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+/* Add styles for the Edit button */
+.edit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px; /* Add margin to the left side of the "Edit" button */
+}
+
+=======
+>>>>>>> 00707230e089d7c6069782d1b40e9ae37a8869a2
+>>>>>>> 8828d63 (Conquer commit)
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .left-section {
@@ -262,12 +285,25 @@
   margin-bottom: 10px;
 }
 
+<<<<<<< HEAD
 label {
+=======
+<<<<<<< HEAD
+.label1 {
+=======
+label {
+>>>>>>> 00707230e089d7c6069782d1b40e9ae37a8869a2
+>>>>>>> 8828d63 (Conquer commit)
   margin-right: 8px;
   width: 5.5%;
   text-align: right;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 8828d63 (Conquer commit)
 /* .technician-dashboard {
   display: flex;
   flex-direction: row;
@@ -328,3 +364,7 @@ label {
   padding: 10px;
   border-radius: 5px;
 } */
+<<<<<<< HEAD
+=======
+>>>>>>> 00707230e089d7c6069782d1b40e9ae37a8869a2
+>>>>>>> 8828d63 (Conquer commit)

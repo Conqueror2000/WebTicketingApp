@@ -1,10 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
+<<<<<<< HEAD
 import '../styles/EmployeeDashboard.css'; 
 import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
 import { NameOfUser } from './LoginForm';
+=======
+import '../styles/EmployeeDashboard.css';
+import PieChartComponent from './PieChartComponent';
+import BarGraph from './BarGraph';
+import { NameOfUser } from './LoginForm';
+import { useNavigate } from 'react-router-dom';
+>>>>>>> 8828d63 (Conquer commit)
 
 const EmployeeDashboard = () => {
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
@@ -92,6 +100,12 @@ const EmployeeDashboard = () => {
   ]);
   const [selectedTicket, setSelectedTicket] = useState(null);
 
+<<<<<<< HEAD
+=======
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const navigate = useNavigate();
+
+>>>>>>> 8828d63 (Conquer commit)
   // New state variables for sorting
   const [sortCriteria, setSortCriteria] = useState('TicketNumber');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -146,11 +160,14 @@ const EmployeeDashboard = () => {
     setSelectedTicket(null);
   };
 
+<<<<<<< HEAD
   const handleLogout = () => {
     // Implement logout logic here
     // For example, clear user authentication state and redirect to the login page
   };
 
+=======
+>>>>>>> 8828d63 (Conquer commit)
   const handleShowTickets = () => {
     setSelectedOption('Show Tickets');
   };
@@ -204,16 +221,103 @@ const EmployeeDashboard = () => {
           : b.TicketNumber - a.TicketNumber;
       }
     });
+<<<<<<< HEAD
   }, [tickets, sortCriteria, sortOrder, filterStatus,filterPriority]);
+=======
+  }, [tickets, sortCriteria, sortOrder, filterStatus, filterPriority]);
+>>>>>>> 8828d63 (Conquer commit)
 
   const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
   const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
   const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
 
+<<<<<<< HEAD
+=======
+  const handleShowLogoutPopup = () => {
+    setShowLogoutPopup(true);
+  };
+
+  // Function to cancel logout
+  const handleCancelLogout = () => {
+    setShowLogoutPopup(false);
+  };
+
+  const handleLogout = () => {
+    // Show the logout confirmation popup
+    setShowLogoutPopup(true);
+  };
+  // Function to confirm and perform logout
+  const handleConfirmLogout = () => {
+    // Implement logout logic here
+    // For example, clear user authentication state and redirect to the login page
+
+    // Redirect to the '/' route after successful logout
+    navigate('/');
+  };
+
+  // Render the logout confirmation popup if showLogoutPopup is true
+  const renderLogoutPopup = () => {
+    return (
+      <div
+        className='logout-popup'
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#fff',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+          borderRadius: '5px',
+          textAlign: 'center',
+        }}>
+        <p
+          style={{
+            fontSize: '18px',
+            marginBottom: '10px',
+          }}>
+          Are you sure you want to log out?
+        </p>
+
+        <button
+          className='logout-button'
+          onClick={handleConfirmLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#3498db',
+            color: '#fff',
+            border: 'none',
+            marginRight: '10px',
+          }}>
+          Yes
+        </button>
+
+        <button
+          className='cancel-button'
+          onClick={handleCancelLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#e74c3c',
+            color: '#fff',
+            border: 'none',
+          }}>
+          Cancel
+        </button>
+      </div>
+    );
+  };
+
+
+>>>>>>> 8828d63 (Conquer commit)
   return (
     <div className='employee-dashboard'>
       <div className='left-section'>
         <div className='button-group'>
+<<<<<<< HEAD
           <h4>Actions</h4>
           <button
             className={`button1 ${
@@ -229,6 +333,8 @@ const EmployeeDashboard = () => {
             onClick={handleRaiseTicket}>
             Raise Ticket
           </button>
+=======
+>>>>>>> 8828d63 (Conquer commit)
         </div>
         {/* <div className='ticket-status-box'>
           <h3>
@@ -242,6 +348,7 @@ const EmployeeDashboard = () => {
             <li>Active:- {ActiveTickets}</li>
           </ul>
         </div> */}
+<<<<<<< HEAD
         <div>
           <div style={{ height: '150px' }}>
             <PieChartComponent data={data} />
@@ -251,6 +358,46 @@ const EmployeeDashboard = () => {
             <BarGraph labels={fieldNames} values={fieldValues} />
           </div>
         </div>
+=======
+        <h4>
+
+        </h4>
+        <div style={{textAlign:'center'}}>
+          <div>
+            <div style={{ height: '150px', width:'140px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <PieChartComponent data={data} />
+            </div>
+          <ul>
+            <li>
+          RaisedTickets</li>
+           <li>CompletedTickets</li>
+            <li>OnholdTickets</li>
+             <li>ActiveTickets</li>
+             </ul>
+          </div>
+          <h4 style={{marginBottom:'40px',marginTop:'50px',textAlign:'center'}}> Ticket vs Priority Graph</h4>
+          <div style={{ maxHeight: '150px',marginBottom:'40px'}}>
+            <BarGraph labels={fieldNames} values={fieldValues} />
+          </div>
+        </div>
+        <button
+            className={`button1 ${
+              selectedOption === 'Show Tickets' ? 'active' : ''
+            }`}
+            onClick={handleShowTickets}
+            style={{ fontSize: '20px' ,marginBottom:'20px',textAlign:'center'}}>
+            Show Tickets
+          </button>
+        <button
+            className={`button1 ${
+              selectedOption === 'Raise Ticket' ? 'active' : ''
+            }`}
+            onClick={handleRaiseTicket}
+            style={{ fontSize: '20px' ,marginBottom:'20px'}}>
+            Raise Ticket
+          </button>
+        
+>>>>>>> 8828d63 (Conquer commit)
         <button className='button-logout' onClick={handleLogout}>
           Logout
         </button>
@@ -372,6 +519,10 @@ const EmployeeDashboard = () => {
           <p>Assigned To: {selectedTicket.AssignedTo}</p>
         </div>
       )}
+<<<<<<< HEAD
+=======
+      {showLogoutPopup && renderLogoutPopup()}
+>>>>>>> 8828d63 (Conquer commit)
     </div>
   );
 };

@@ -93,7 +93,11 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit} className='login-form form-group'>
       <div className='form-group'>
+<<<<<<< HEAD
         <label htmlFor='username'>Username</label>
+=======
+        <label htmlFor='username'>UserId</label>
+>>>>>>> 8828d63 (Conquer commit)
         <input
           type='text'
           id='username'
@@ -146,10 +150,17 @@ const LoginForm = () => {
       </button>
 
       <div style={{ marginTop: '10px' }}>
+<<<<<<< HEAD
         <span className='register-text' onClick={() => navigate('/register')}>
           Register?
         </span>{' '}
         A New User
+=======
+      Only Admin Can
+        <span className='register-text' onClick={() => navigate('/register')}>
+          Register!
+        </span>{' '}
+>>>>>>> 8828d63 (Conquer commit)
       </div>
     </form>
   );

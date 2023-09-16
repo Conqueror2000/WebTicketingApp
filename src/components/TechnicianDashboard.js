@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import TicketForm from './TicketForm';
+<<<<<<< HEAD
 import '../styles/EmployeeDashboard.css'; 
 import PieChartComponent from './PieChartComponent';
 import BarGraph from './BarGraph';
@@ -8,6 +9,16 @@ import { NameOfUser } from './LoginForm';
 
 const EmployeeDashboard = () => {
   const [selectedOption, setSelectedOption] = useState('Show Tickets');
+=======
+import '../styles/EmployeeDashboard.css';
+import PieChartComponent from './PieChartComponent';
+import BarGraph from './BarGraph';
+import { NameOfUser } from './LoginForm';
+import { useNavigate } from 'react-router-dom';
+
+const TechnicianDashboard = ({ tick, updateTicketStatus }) => {
+  const [selectedOption] = useState('Show Tickets');
+>>>>>>> 8828d63 (Conquer commit)
   const [tickets, setTickets] = useState([
     {
       TicketNumber: 1,
@@ -17,14 +28,32 @@ const EmployeeDashboard = () => {
       EmployeeId: 'E002',
       Priority: 'High',
       Comment: 'Not working',
+<<<<<<< HEAD
       AssignedTo: 'T001',
+=======
+      AssignedTo: 'T002',
+    },
+    {
+      TicketNumber: 1,
+      Sector: 'IT',
+      TypeOfEquip: 'Laptop',
+      Status: 'Active',
+      EmployeeId: 'E002',
+      Priority: 'High',
+      Comment: 'Not working',
+      AssignedTo: 'T002',
+>>>>>>> 8828d63 (Conquer commit)
     },
     {
       TicketNumber: 2,
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Completed',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E005',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Medium',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -34,7 +63,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Mouse',
       Status: 'Onhold',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E0012',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Low',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -44,7 +77,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Raised',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E0018',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Critical',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -54,7 +91,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Raised',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E007',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Medium',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -64,7 +105,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Raised',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E0011',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Medium',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -74,7 +119,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Raised',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E009',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Medium',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -84,7 +133,11 @@ const EmployeeDashboard = () => {
       Sector: 'HR',
       TypeOfEquip: 'Printer',
       Status: 'Raised',
+<<<<<<< HEAD
       EmployeeId: 'E002',
+=======
+      EmployeeId: 'E0077',
+>>>>>>> 8828d63 (Conquer commit)
       Priority: 'Medium',
       Comment: 'Paper jam',
       AssignedTo: 'T002',
@@ -100,6 +153,16 @@ const EmployeeDashboard = () => {
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterPriority, setFilterPriority] = useState('All');
 
+<<<<<<< HEAD
+=======
+  // New state variable to store the updated status
+  const [newStatus, setNewStatus] = useState('');
+
+  // Use state to manage the popup visibility
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const navigate = useNavigate();
+
+>>>>>>> 8828d63 (Conquer commit)
   // Define the ticket status values
   const RaisedTickets = tickets.filter(
     (ticket) => ticket.Status === 'Raised'
@@ -146,6 +209,7 @@ const EmployeeDashboard = () => {
     setSelectedTicket(null);
   };
 
+<<<<<<< HEAD
   const handleLogout = () => {
     // Implement logout logic here
     // For example, clear user authentication state and redirect to the login page
@@ -158,6 +222,16 @@ const EmployeeDashboard = () => {
   const handleRaiseTicket = () => {
     setSelectedOption('Raise Ticket');
   };
+=======
+  // const handleShowTickets = () => {
+  //   setSelectedOption('Show Tickets');
+  // };
+
+  // const handleRaiseTicket = () => {
+  //   setSelectedOption('Raise Ticket');
+  // };
+
+>>>>>>> 8828d63 (Conquer commit)
 
   function getStatusColor(status) {
     switch (status) {
@@ -204,12 +278,17 @@ const EmployeeDashboard = () => {
           : b.TicketNumber - a.TicketNumber;
       }
     });
+<<<<<<< HEAD
   }, [tickets, sortCriteria, sortOrder, filterStatus,filterPriority]);
+=======
+  }, [tickets, sortCriteria, sortOrder, filterStatus, filterPriority]);
+>>>>>>> 8828d63 (Conquer commit)
 
   const data = [RaisedTickets, CompletedTickets, OnholdTickets, ActiveTickets];
   const fieldNames = ['Critical', 'High', 'Medium', 'Low'];
   const fieldValues = [CriticalTickets, HighTickets, MediumTickets, LowTickets];
 
+<<<<<<< HEAD
   return (
     <div className='employee-dashboard'>
       <div className='left-section'>
@@ -255,6 +334,122 @@ const EmployeeDashboard = () => {
           Logout
         </button>
       </div>
+=======
+  const handleStatusChange = (event) => {
+    setNewStatus(event.target.value);
+  };
+
+  const handleEdit = () => {
+    if (selectedTicket && newStatus !== '') {
+      // Create an object with the updated ticket data
+      const updatedTicket = {
+        ...selectedTicket,
+        Status: newStatus,
+      };
+
+      // Send a POST request to update the ticket in the database
+      axios
+        .post('http://localhost:5000/api/update-ticket', updatedTicket)
+        .then((response) => {
+          // Handle success
+          console.log('Ticket status updated successfully:', response.data);
+
+          // Close the mini-screen
+          closeMiniScreen();
+
+          // Update the tickets in the parent component's state
+          updateTicketStatus(updatedTicket);
+        })
+        .catch((error) => {
+          // Handle error
+          alert(error.message);
+          console.error('Error updating ticket status:', error);
+        });
+    }
+  };
+
+  // Function to handle logout button click
+  const handleShowLogoutPopup = () => {
+    setShowLogoutPopup(true);
+  };
+
+  // Function to cancel logout
+  const handleCancelLogout = () => {
+    setShowLogoutPopup(false);
+  };
+
+  const handleLogout = () => {
+    // Show the logout confirmation popup
+    setShowLogoutPopup(true);
+  };
+  // Function to confirm and perform logout
+  const handleConfirmLogout = () => {
+    // Implement logout logic here
+    // For example, clear user authentication state and redirect to the login page
+
+    // Redirect to the '/' route after successful logout
+    navigate('/');
+  };
+
+  // Render the logout confirmation popup if showLogoutPopup is true
+  const renderLogoutPopup = () => {
+    return (
+      <div
+        className='logout-popup'
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#fff',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+          borderRadius: '5px',
+          textAlign: 'center',
+        }}>
+        <p
+          style={{
+            fontSize: '18px',
+            marginBottom: '10px',
+          }}>
+          Are you sure you want to log out?
+        </p>
+
+        <button
+          className='logout-button'
+          onClick={handleConfirmLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#3498db',
+            color: '#fff',
+            border: 'none',
+            marginRight: '10px',
+          }}>
+          Yes
+        </button>
+
+        <button
+          className='cancel-button'
+          onClick={handleCancelLogout}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            backgroundColor: '#e74c3c',
+            color: '#fff',
+            border: 'none',
+          }}>
+          Cancel
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className='employee-dashboard'>
+>>>>>>> 8828d63 (Conquer commit)
       <div className='right-section' style={{ backgroundColor: '#E8EBEE' }}>
         <h1
           style={{
@@ -339,12 +534,18 @@ const EmployeeDashboard = () => {
                     Status: {ticket.Status}
                   </p>
                 </div>
+<<<<<<< HEAD
                 <div
                   className={`ticket-info-container ${
                     !ticket.AssignedTo ? 'unassigned' : ''
                   }`}>
                   <p className='ticket-info assigned-to'>
                     Assigned To: {ticket.AssignedTo}
+=======
+                <div className={`ticket-info-container`}>
+                  <p className='ticket-info assigned-to'>
+                    Employee: {ticket.EmployeeId}
+>>>>>>> 8828d63 (Conquer commit)
                   </p>
                   <p className='ticket-info priority'>
                     Priority: {ticket.Priority}
@@ -355,12 +556,61 @@ const EmployeeDashboard = () => {
           </div>
         )}
       </div>
+<<<<<<< HEAD
 
       {selectedTicket && (
         <div className='ticket-details-mini-screen'>
           <button className='button2' onClick={closeMiniScreen}>
             Close
           </button>
+=======
+      <div className='left-section'>
+        {/* <div className='button-group'>
+          <h4>Actions</h4>
+          <button
+            className={`button1 ${
+              selectedOption === 'Show Tickets' ? 'active' : ''
+            }`}
+            onClick={handleShowTickets}>
+            Show Tickets
+          </button>
+          <button
+            className={`button1 ${
+              selectedOption === 'Raise Ticket' ? 'active' : ''
+            }`}
+            onClick={handleRaiseTicket}>
+            Raise Ticket
+          </button>
+        </div> */}
+        <div>
+          <div style={{ height: '150px' }}>
+            <PieChartComponent data={data} />
+          </div>
+          <h4>Bar Graph Example</h4>
+          <div style={{ maxHeight: '150px' }}>
+            <BarGraph labels={fieldNames} values={fieldValues} />
+          </div>
+        </div>
+        <div className='ticket-status-box'>
+          <h3>
+            Total Tickets:-{' '}
+            {RaisedTickets + CompletedTickets + OnholdTickets + ActiveTickets}
+          </h3>
+          <ul>
+            <li>Yet To Start:- {RaisedTickets}</li>
+            <li>Resolved:- {CompletedTickets}</li>
+            <li>Onhold:- {OnholdTickets}</li>
+            <li>Active:- {ActiveTickets}</li>
+          </ul>
+        </div>
+        <button className='button-logout' onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+
+      {selectedTicket && (
+        <div className='ticket-details-mini-screen'>
+>>>>>>> 8828d63 (Conquer commit)
           <h3>Details for Ticket #{selectedTicket.TicketNumber}</h3>
           <p>Sector: {selectedTicket.Sector}</p>
           <p>Type of Equipment: {selectedTicket.TypeOfEquip}</p>
@@ -370,12 +620,42 @@ const EmployeeDashboard = () => {
           <p>Priority: {selectedTicket.Priority}</p>
           <p>Comment: {selectedTicket.Comment}</p>
           <p>Assigned To: {selectedTicket.AssignedTo}</p>
+<<<<<<< HEAD
         </div>
       )}
+=======
+          <div className='ticket-info-container'>
+            <p className='ticket-info status'>
+              Edit Status:
+              <select onChange={handleStatusChange} value={newStatus}>
+                <option value='Active'>Active</option>
+                <option value='Onhold'>OnHold</option>
+                <option value='Completed'>Completed</option>
+              </select>
+            </p>
+          </div>
+          <div className='button-container'>
+            <button
+              className='button2 edit-button'
+              onClick={handleEdit}
+              style={{ marginRight: '225px' }}>
+              Submit
+            </button>
+            <button className='button2' onClick={closeMiniScreen}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Render the logout confirmation popup if showLogoutPopup is true */}
+      {showLogoutPopup && renderLogoutPopup()}
+>>>>>>> 8828d63 (Conquer commit)
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default EmployeeDashboard;
 
 
@@ -494,3 +774,6 @@ export default EmployeeDashboard;
 // };
 
 // export default TechnicianDashboard;
+=======
+export default TechnicianDashboard;
+>>>>>>> 8828d63 (Conquer commit)
